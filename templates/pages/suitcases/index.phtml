@@ -1,0 +1,50 @@
+<div class="bg-white p-6 rounded-xl shadow-md">
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-semibold">لیست چمدان‌ها</h2>
+        <!-- FIX: Corrected the href to point to the create page -->
+        <a href="<?php echo APP_URL; ?>/suitcases/create" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">ایجاد چمدان جدید</a>
+    </div>
+
+    <!-- Suitcases Table -->
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm text-right text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                <tr>
+                    <th scope="col" class="py-3 px-6">کد چمدان</th>
+                    <th scope="col" class="py-3 px-6">وضعیت</th>
+                    <th scope="col" class="py-3 px-6">ایجاد کننده</th>
+                    <th scope="col" class="py-3 px-6">تعداد سفارش</th>
+                    <th scope="col" class="py-3 px-6">تاریخ ایجاد</th>
+                    <th scope="col" class="py-3 px-6">عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (empty($suitcases)): ?>
+                    <tr>
+                        <td colspan="6" class="text-center py-6">هیچ چمدانی یافت نشد.</td>
+                    </tr>
+                <?php else: ?>
+                    <?php foreach ($suitcases as $suitcase): ?>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="py-4 px-6 font-medium text-gray-900">#<?php echo e($suitcase->suitcase_code); ?></td>
+                            <td class="py-4 px-6">
+                                <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded-full"><?php echo e($suitcase->status); ?></span>
+                            </td>
+                            <td class="py-4 px-6"><?php echo e($suitcase->creator_name); ?></td>
+                            <td class="py-4 px-6"><?php echo e($suitcase->order_count); ?></td>
+                            <td class="py-4 px-6"><?php echo jdate('Y/m/d', strtotime($suitcase->created_at)); ?></td>
+                            <td class="py-4 px-6">
+                                <a href="<?php echo APP_URL; ?>/suitcases/show?id=<?php echo e($suitcase->id); ?>" class="font-medium text-blue-600 hover:underline">مشاهده و تخصیص سفارش</a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-6">
+        <?php require_once TEMPLATES_PATH . '/partials/_pagination.php'; ?>
+    </div>
+</div>

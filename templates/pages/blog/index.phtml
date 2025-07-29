@@ -1,0 +1,30 @@
+<div class="bg-white p-6 rounded-xl shadow-md">
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-semibold">لیست نوشته‌های وبلاگ</h2>
+        <div>
+            <a href="<?php echo APP_URL; ?>/blog/categories" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 ml-2">مدیریت دسته‌ها</a>
+            <a href="<?php echo APP_URL; ?>/blog/create" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">نوشته جدید</a>
+        </div>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm text-right text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                <tr>
+                    <th class="py-3 px-6">عنوان</th><th class="py-3 px-6">نویسنده</th><th class="py-3 px-6">دسته‌بندی</th><th class="py-3 px-6">وضعیت</th><th class="py-3 px-6">آخرین ویرایش</th><th class="py-3 px-6">عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($posts as $post): ?>
+                <tr class="bg-white border-b hover:bg-gray-50">
+                    <td class="py-4 px-6 font-medium"><?php echo e($post->title); ?></td>
+                    <td class="py-4 px-6"><?php echo e($post->author_name); ?></td>
+                    <td class="py-4 px-6"><?php echo e($post->category_name); ?></td>
+                    <td class="py-4 px-6"><?php echo $post->status === 'published' ? 'منتشر شده' : 'پیش‌نویس'; ?></td>
+                    <td class="py-4 px-6"><?php echo jdate('Y/m/d', strtotime($post->updated_at)); ?></td>
+                    <td class="py-4 px-6"><a href="#" class="font-medium text-blue-600 hover:underline">ویرایش</a></td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>

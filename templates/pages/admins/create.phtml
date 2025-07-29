@@ -1,0 +1,41 @@
+<div class="bg-white p-6 rounded-xl shadow-md max-w-2xl mx-auto">
+    <h2 class="text-xl font-semibold mb-6 border-b pb-4">افزودن مدیر / کارمند جدید</h2>
+    <form action="<?php echo APP_URL; ?>/admins/store" method="POST">
+        <div class="space-y-6">
+            <div>
+                <label for="full_name" class="block text-sm font-medium text-gray-700">نام کامل</label>
+                <input type="text" name="full_name" id="full_name" required class="mt-1 w-full px-4 py-2 border rounded-lg">
+            </div>
+            <div>
+                <label for="username" class="block text-sm font-medium text-gray-700">نام کاربری</label>
+                <input type="text" name="username" id="username" required class="mt-1 w-full px-4 py-2 border rounded-lg">
+            </div>
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">ایمیل</label>
+                <input type="email" name="email" id="email" required class="mt-1 w-full px-4 py-2 border rounded-lg">
+            </div>
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700">رمز عبور</label>
+                <input type="password" name="password" id="password" required class="mt-1 w-full px-4 py-2 border rounded-lg">
+            </div>
+            <div>
+                <label for="phone" class="block text-sm font-medium text-gray-700">شماره تلفن</label>
+                <input type="text" name="phone" id="phone" class="mt-1 w-full px-4 py-2 border rounded-lg">
+            </div>
+            <div>
+                <label for="role_id" class="block text-sm font-medium text-gray-700">نقش کاربری</label>
+                <select name="role_id" id="role_id" class="mt-1 w-full px-4 py-2 border rounded-lg">
+                    <?php foreach ($roles as $role): ?>
+                    <option value="<?php echo e($role->id); ?>"><?php echo e($role->role_name); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+        <div class="mt-8 pt-5 border-t">
+            <div class="flex justify-end">
+                <a href="<?php echo APP_URL; ?>/admins" class="bg-gray-200 text-gray-700 font-bold py-2 px-6 rounded-lg hover:bg-gray-300 ml-4">انصراف</a>
+                <button type="submit" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700">ذخیره کاربر</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,9 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Set the base directory
+    RewriteBase /irnaaz/
+
+    # Rewrite everything to the public folder
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>

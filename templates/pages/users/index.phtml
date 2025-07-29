@@ -1,0 +1,54 @@
+<div class="bg-white p-6 rounded-xl shadow-md">
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-semibold">لیست کاربران</h2>
+        <a href="<?php echo APP_URL; ?>/users/create" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">افزودن کاربر جدید</a>
+    </div>
+
+    <!-- Display Flash Message -->
+    <?php display_flash_message('success'); ?>
+
+    <!-- Users Table -->
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm text-right text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                <tr>
+                    <th scope="col" class="py-3 px-6">نام کامل</th>
+                    <th scope="col" class="py-3 px-6">نام کاربری</th>
+                    <th scope="col" class="py-3 px-6">ایمیل</th>
+                    <th scope="col" class="py-3 px-6">نقش</th>
+                    <th scope="col" class="py-3 px-6">وضعیت</th>
+                    <th scope="col" class="py-3 px-6">تاریخ عضویت</th>
+                    <th scope="col" class="py-3 px-6">عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (empty($users)): ?>
+                    <tr><td colspan="7" class="text-center py-6">هیچ کاربری یافت نشد.</td></tr>
+                <?php else: ?>
+                    <?php foreach ($users as $user): ?>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="py-4 px-6 font-medium text-gray-900"><?php echo e($user->full_name); ?></td>
+                            <td class="py-4 px-6"><?php echo e($user->username); ?></td>
+                            <td class="py-4 px-6"><?php echo e($user->email); ?></td>
+                            <td class="py-4 px-6"><?php echo e($user->role_name); ?></td>
+                            <td class="py-4 px-6">
+                                <?php if ($user->is_active): ?>
+                                    <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">فعال</span>
+                                <?php else: ?>
+                                    <span class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">غیرفعال</span>
+                                <?php endif; ?>
+                            </td>
+                            <td class="py-4 px-6"><?php echo jdate('Y/m/d', strtotime($user->created_at)); ?></td>
+                            <td class="py-4 px-6">
+                                <a href="<?php echo APP_URL; ?>/users/edit?id=<?php echo e($user->id); ?>" class="font-medium text-blue-600 hover:underline">ویرایش</a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-6"><?php require_once TEMPLATES_PATH . '/partials/_pagination.php'; ?></div>
+</div>

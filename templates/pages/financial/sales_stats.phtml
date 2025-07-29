@@ -1,0 +1,92 @@
+<!-- Stat Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="bg-white p-6 rounded-xl shadow-md">
+        <p class="text-gray-500 text-sm">درآمد کل</p>
+        <p class="text-2xl font-bold text-gray-800 mt-2"><?php echo number_format($stats['total_revenue']); ?> <span class="text-sm font-normal">تومان</span></p>
+    </div>
+    <div class="bg-white p-6 rounded-xl shadow-md">
+        <p class="text-gray-500 text-sm">درآمد ماه جاری</p>
+        <p class="text-2xl font-bold text-gray-800 mt-2"><?php echo number_format($stats['monthly_revenue']); ?> <span class="text-sm font-normal">تومان</span></p>
+    </div>
+    <div class="bg-white p-6 rounded-xl shadow-md">
+        <p class="text-gray-500 text-sm">درآمد سال جاری</p>
+        <p class="text-2xl font-bold text-gray-800 mt-2"><?php echo number_format($stats['yearly_revenue']); ?> <span class="text-sm font-normal">تومان</span></p>
+    </div>
+    <div class="bg-white p-6 rounded-xl shadow-md">
+        <p class="text-gray-500 text-sm">میانگین ارزش هر سفارش</p>
+        <p class="text-2xl font-bold text-gray-800 mt-2"><?php echo number_format($stats['average_order_value']); ?> <span class="text-sm font-normal">تومان</span></p>
+    </div>
+</div>
+
+<!-- Main Chart -->
+<div class="bg-white p-6 rounded-xl shadow-md">
+    <h3 class="text-lg font-semibold text-gray-800 mb-4">نمودار فروش ماهانه سال <?php echo jdate('Y'); ?></h3>
+    <div class="h-96">
+        <canvas id="salesChart"></canvas>
+    </div>
+</div>
+
+<!-- Chart.js and custom script for charts -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const labels = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
+        const salesData = <?php echo json_encode($monthly_sales_chart); ?>;
+
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'میزان فروش (تومان)',
+                backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                borderColor: 'rgb(59, 130, 246)',
+                data: salesData,
+                tension: 0.4,
+                fill: true,
+            }]
+        };
+
+        const config = {
+            type: 'line',
+            data: data,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value, index, values) {
+                                return new Intl.NumberFormat('fa-IR').format(value);
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += new Intl.NumberFormat('fa-IR', { style: 'currency', currency: 'IRR' }).format(context.parsed.y * 10); // Convert Toman to Rial for currency format
+                                }
+                                return label;
+                            }
+                        }
+                    },
+                    legend: {
+                        display: true,
+                        position: 'bottom',
+                    }
+                }
+            }
+        };
+
+        new Chart(
+            document.getElementById('salesChart'),
+            config
+        );
+    });
+</script>

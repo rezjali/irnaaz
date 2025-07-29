@@ -1,0 +1,51 @@
+<div class="bg-white p-6 rounded-xl shadow-md">
+    <h2 class="text-xl font-semibold mb-4">بررسی فیش‌های واریزی در انتظار</h2>
+    <p class="text-sm text-gray-500 mb-6">در این بخش فیش‌های واریزی که توسط کاربران ارسال شده و در انتظار تایید هستند، نمایش داده می‌شوند.</p>
+
+    <!-- Receipts Table -->
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm text-right text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                <tr>
+                    <th scope="col" class="py-3 px-6">کاربر</th>
+                    <th scope="col" class="py-3 px-6">مبلغ (تومان)</th>
+                    <th scope="col" class="py-3 px-6">کیف پول</th>
+                    <th scope="col" class="py-3 px-6">تاریخ ارسال</th>
+                    <th scope="col" class="py-3 px-6">فیش</th>
+                    <th scope="col" class="py-3 px-6">عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (empty($receipts)): ?>
+                    <tr>
+                        <td colspan="6" class="text-center py-6">هیچ فیش در حال انتظاری یافت نشد.</td>
+                    </tr>
+                <?php else: ?>
+                    <?php foreach ($receipts as $receipt): ?>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="py-4 px-6 font-medium text-gray-900"><?php echo e($receipt->user_name); ?></td>
+                            <td class="py-4 px-6 font-bold text-green-600"><?php echo number_format($receipt->amount); ?></td>
+                            <td class="py-4 px-6"><?php echo $receipt->wallet_type === 'product' ? 'کالا' : 'باربری'; ?></td>
+                            <td class="py-4 px-6"><?php echo jdate('Y/m/d H:i', strtotime($receipt->created_at)); ?></td>
+                            <td class="py-4 px-6">
+                                <a href="<?php echo APP_URL . '/' . e($receipt->receipt_url); ?>" target="_blank" class="font-medium text-blue-600 hover:underline">مشاهده فیش</a>
+                            </td>
+                            <td class="py-4 px-6 flex items-center space-x-2 space-x-reverse">
+                                <form action="<?php echo APP_URL; ?>/financial/receipts/process" method="POST" onsubmit="return confirm('آیا از تایید این فیش مطمئن هستید؟');">
+                                    <input type="hidden" name="receipt_id" value="<?php echo e($receipt->id); ?>">
+                                    <input type="hidden" name="action" value="approve">
+                                    <button type="submit" class="px-3 py-1 text-xs font-medium text-white bg-green-600 rounded-md hover:bg-green-700">تایید</button>
+                                </form>
+                                <form action="<?php echo APP_URL; ?>/financial/receipts/process" method="POST" onsubmit="return confirm('آیا از رد این فیش مطمئن هستید؟');">
+                                    <input type="hidden" name="receipt_id" value="<?php echo e($receipt->id); ?>">
+                                    <input type="hidden" name="action" value="reject">
+                                    <button type="submit" class="px-3 py-1 text-xs font-medium text-white bg-red-600 rounded-md hover:bg-red-700">رد</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+</div>

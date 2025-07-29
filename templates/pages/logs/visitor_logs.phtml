@@ -1,0 +1,23 @@
+<div class="bg-white p-6 rounded-xl shadow-md">
+    <h2 class="text-xl font-semibold mb-4">آمار بازدید صفحات</h2>
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm text-right text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                <tr>
+                    <th class="py-3 px-6">کاربر</th><th class="py-3 px-6">آدرس IP</th><th class="py-3 px-6">صفحه بازدید شده</th><th class="py-3 px-6">زمان</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($logs as $log): ?>
+                <tr class="bg-white border-b hover:bg-gray-50">
+                    <td class="py-4 px-6"><?php echo e($log->full_name ?? 'مهمان'); ?></td>
+                    <td class="py-4 px-6"><?php echo e($log->ip_address); ?></td>
+                    <td class="py-4 px-6" dir="ltr"><?php echo e($log->request_uri); ?></td>
+                    <td class="py-4 px-6"><?php echo jdate('Y/m/d H:i:s', strtotime($log->timestamp)); ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <div class="mt-6"><?php require_once TEMPLATES_PATH . '/partials/_pagination.php'; ?></div>
+</div>

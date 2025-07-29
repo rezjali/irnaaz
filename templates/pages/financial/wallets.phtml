@@ -1,0 +1,46 @@
+<div class="bg-white p-6 rounded-xl shadow-md">
+    <h2 class="text-xl font-semibold mb-4">لیست موجودی کیف پول کاربران - <?php echo $wallet_type === 'product' ? 'کالا' : 'باربری'; ?></h2>
+
+    <!-- Wallets Table -->
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm text-right text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                <tr>
+                    <th scope="col" class="py-3 px-6">نام کامل</th>
+                    <th scope="col" class="py-3 px-6">نام کاربری</th>
+                    <th scope="col" class="py-3 px-6">موجودی (تومان)</th>
+                    <th scope="col" class="py-3 px-6">عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (empty($users)): ?>
+                    <tr>
+                        <td colspan="4" class="text-center py-6">هیچ کاربری یافت نشد.</td>
+                    </tr>
+                <?php else: ?>
+                    <?php foreach ($users as $user): ?>
+                        <?php
+                            $balance = ($wallet_type === 'product') ? $user->wallet_product : $user->wallet_shipping;
+                            $balance_color = $balance < 0 ? 'text-red-600' : 'text-green-600';
+                        ?>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="py-4 px-6 font-medium text-gray-900"><?php echo e($user->full_name); ?></td>
+                            <td class="py-4 px-6"><?php echo e($user->username); ?></td>
+                            <td class="py-4 px-6 font-bold <?php echo $balance_color; ?>">
+                                <?php echo number_format($balance); ?>
+                            </td>
+                            <td class="py-4 px-6">
+                                <a href="<?php echo APP_URL; ?>/financial/assign-credit?user_id=<?php echo e($user->id); ?>" class="font-medium text-blue-600 hover:underline">تغییر موجودی</a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-6">
+        <?php require_once TEMPLATES_PATH . '/partials/_pagination.php'; ?>
+    </div>
+</div>

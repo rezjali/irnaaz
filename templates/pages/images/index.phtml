@@ -1,0 +1,32 @@
+<div class="bg-white p-6 rounded-xl shadow-md">
+    <div class="flex justify-between items-center mb-6 border-b pb-4">
+        <h2 class="text-xl font-semibold">مدیریت تصاویر</h2>
+        <form action="<?php echo APP_URL; ?>/images/upload" method="POST" enctype="multipart/form-data">
+            <label class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 cursor-pointer">
+                <span>آپلود تصویر جدید</span>
+                <input type="file" name="image" class="hidden" onchange="this.form.submit()">
+            </label>
+        </form>
+    </div>
+
+    <!-- Image Gallery -->
+    <?php if (empty($images)): ?>
+        <p class="text-center text-gray-500 py-8">هیچ تصویری آپلود نشده است.</p>
+    <?php else: ?>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            <?php foreach ($images as $image): ?>
+                <div class="relative group border rounded-lg overflow-hidden">
+                    <img src="<?php echo APP_URL . '/' . e($image->file_path); ?>" alt="<?php echo e($image->file_name); ?>" class="w-full h-32 object-cover">
+                    <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <form action="<?php echo APP_URL; ?>/images/delete" method="POST" onsubmit="return confirm('آیا از حذف این تصویر مطمئن هستید؟');">
+                            <input type="hidden" name="id" value="<?php echo e($image->id); ?>">
+                            <button type="submit" class="text-white p-2 rounded-full hover:bg-red-500">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+</div>

@@ -1,0 +1,31 @@
+<div class="bg-white p-6 rounded-xl shadow-md">
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-semibold">لیست مدیران و کارمندان</h2>
+        <a href="<?php echo APP_URL; ?>/admins/create" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">افزودن مدیر جدید</a>
+    </div>
+    <?php display_flash_message('success'); ?>
+    <!-- Admins Table -->
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm text-right text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                <tr><th class="py-3 px-6">نام کامل</th><th class="py-3 px-6">نام کاربری</th><th class="py-3 px-6">ایمیل</th><th class="py-3 px-6">نقش</th><th class="py-3 px-6">وضعیت</th><th class="py-3 px-6">عملیات</th></tr>
+            </thead>
+            <tbody>
+                <?php if (empty($admin_users)): ?>
+                    <tr><td colspan="6" class="text-center py-6">هیچ مدیر یا کارمندی یافت نشد.</td></tr>
+                <?php else: ?>
+                    <?php foreach ($admin_users as $user): ?>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="py-4 px-6"><?php echo e($user->full_name); ?></td>
+                            <td class="py-4 px-6"><?php echo e($user->username); ?></td>
+                            <td class="py-4 px-6"><?php echo e($user->email); ?></td>
+                            <td class="py-4 px-6"><?php echo e($user->role_name); ?></td>
+                            <td class="py-4 px-6"><?php if ($user->is_active): ?><span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">فعال</span><?php else: ?><span class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">غیرفعال</span><?php endif; ?></td>
+                            <td class="py-4 px-6"><a href="<?php echo APP_URL; ?>/users/edit?id=<?php echo e($user->id); ?>" class="font-medium text-blue-600 hover:underline">ویرایش</a></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+<div class="bg-white p-6 rounded-xl shadow-md max-w-4xl mx-auto">
+    <h2 class="text-xl font-semibold mb-6 border-b pb-4">
+        ویرایش دسترسی‌های گروه: <span class="text-blue-600"><?php echo e($role->role_name); ?></span>
+    </h2>
+
+    <form action="<?php echo APP_URL; ?>/roles/update" method="POST">
+        <input type="hidden" name="role_id" value="<?php echo e($role->id); ?>">
+        
+        <div class="space-y-8">
+            <?php foreach ($permissions as $category => $permission_list): ?>
+                <fieldset>
+                    <legend class="text-lg font-semibold text-gray-900 mb-4"><?php echo e($category); ?></legend>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                        <?php foreach ($permission_list as $permission): ?>
+                            <div class="relative flex items-start">
+                                <div class="flex items-center h-5">
+                                    <input id="permission_<?php echo e($permission->id); ?>" 
+                                           name="permissions[]" 
+                                           type="checkbox" 
+                                           value="<?php echo e($permission->id); ?>"
+                                           <?php echo in_array($permission->id, $role_permissions) ? 'checked' : ''; ?>
+                                           class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded">
+                                </div>
+                                <div class="mr-3 text-sm">
+                                    <label for="permission_<?php echo e($permission->id); ?>" class="font-medium text-gray-700">
+                                        <?php echo e($permission->description); ?>
+                                    </label>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </fieldset>
+            <?php endforeach; ?>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="mt-8 pt-5 border-t">
+            <div class="flex justify-end">
+                <a href="<?php echo APP_URL; ?>/roles" class="bg-gray-200 text-gray-700 font-bold py-2 px-6 rounded-lg hover:bg-gray-300 ml-4">انصراف</a>
+                <button type="submit" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 focus:outline-none focus:shadow-outline">
+                    ذخیره تغییرات
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

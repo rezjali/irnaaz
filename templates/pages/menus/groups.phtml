@@ -1,0 +1,21 @@
+<div class="bg-white p-6 rounded-xl shadow-md max-w-2xl mx-auto">
+    <h2 class="text-xl font-semibold mb-4">مدیریت دسته‌های منو</h2>
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm text-right text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                <tr>
+                    <th class="py-3 px-6">#</th><th class="py-3 px-6">نام دسته</th><th class="py-3 px-6">اسلاگ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($groups as $group): ?>
+                <tr class="bg-white border-b">
+                    <td class="py-4 px-6"><?php echo e($group->id); ?></td>
+                    <td class="py-4 px-6 font-medium"><?php echo e($group->name); ?></td>
+                    <td class="py-4 px-6"><?php echo e($group->slug); ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>

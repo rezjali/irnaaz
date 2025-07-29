@@ -1,0 +1,42 @@
+<div class="bg-white p-6 rounded-xl shadow-md">
+    <h2 class="text-xl font-semibold mb-4">لیست کاربران بدهکار</h2>
+    <p class="text-sm text-gray-500 mb-6">این لیست شامل کاربرانی است که موجودی کیف پول آن‌ها منفی می‌باشد.</p>
+
+    <!-- Debtors Table -->
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm text-right text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                <tr>
+                    <th scope="col" class="py-3 px-6">نام کامل</th>
+                    <th scope="col" class="py-3 px-6">نام کاربری</th>
+                    <th scope="col" class="py-3 px-6">موجودی کیف پول کالا (تومان)</th>
+                    <th scope="col" class="py-3 px-6">موجودی کیف پول باربری (تومان)</th>
+                    <th scope="col" class="py-3 px-6">عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (empty($debtors)): ?>
+                    <tr>
+                        <td colspan="5" class="text-center py-6">هیچ کاربر بدهکاری یافت نشد.</td>
+                    </tr>
+                <?php else: ?>
+                    <?php foreach ($debtors as $debtor): ?>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="py-4 px-6 font-medium text-gray-900"><?php echo e($debtor->full_name); ?></td>
+                            <td class="py-4 px-6"><?php echo e($debtor->username); ?></td>
+                            <td class="py-4 px-6 font-bold <?php echo $debtor->wallet_product < 0 ? 'text-red-600' : 'text-gray-700'; ?>">
+                                <?php echo number_format($debtor->wallet_product); ?>
+                            </td>
+                            <td class="py-4 px-6 font-bold <?php echo $debtor->wallet_shipping < 0 ? 'text-red-600' : 'text-gray-700'; ?>">
+                                <?php echo number_format($debtor->wallet_shipping); ?>
+                            </td>
+                            <td class="py-4 px-6">
+                                <a href="<?php echo APP_URL; ?>/financial/assign-credit?user_id=<?php echo e($debtor->id); ?>" class="font-medium text-blue-600 hover:underline">افزایش اعتبار</a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+</div>

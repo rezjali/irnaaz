@@ -1,0 +1,135 @@
+<!-- Stat Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div class="bg-white p-6 rounded-xl shadow-md flex items-center justify-between">
+        <div>
+            <p class="text-gray-500 text-sm">سفارشات فعال</p>
+            <p class="text-3xl font-bold text-gray-800"><?php echo e($stats['active_orders']); ?></p>
+        </div>
+        <div class="w-12 h-12 rounded-full flex items-center justify-center bg-blue-100 text-blue-600">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+        </div>
+    </div>
+    <div class="bg-white p-6 rounded-xl shadow-md flex items-center justify-between">
+        <div>
+            <p class="text-gray-500 text-sm">تیکت های باز</p>
+            <p class="text-3xl font-bold text-gray-800"><?php echo e($stats['open_tickets']); ?></p>
+        </div>
+        <div class="w-12 h-12 rounded-full flex items-center justify-center bg-cyan-100 text-cyan-600">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2H5z"></path></svg>
+        </div>
+    </div>
+    <div class="bg-white p-6 rounded-xl shadow-md flex items-center justify-between">
+        <div>
+            <p class="text-gray-500 text-sm">کل مشتریان</p>
+            <p class="text-3xl font-bold text-gray-800"><?php echo e($stats['total_users']); ?></p>
+        </div>
+        <div class="w-12 h-12 rounded-full flex items-center justify-center bg-purple-100 text-purple-600">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M15 21a6 6 0 00-9-5.197M15 21a6 6 0 006-6v-1a6 6 0 00-9-5.197M12 12a4 4 0 110-8 4 4 0 010 8z"></path></svg>
+        </div>
+    </div>
+    <div class="bg-white p-6 rounded-xl shadow-md flex items-center justify-between">
+        <div>
+            <p class="text-gray-500 text-sm">درآمد کل (تومان)</p>
+            <p class="text-3xl font-bold text-gray-800"><?php echo number_format($stats['total_revenue']); ?></p>
+        </div>
+        <div class="w-12 h-12 rounded-full flex items-center justify-center bg-green-100 text-green-600">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v.01"></path></svg>
+        </div>
+    </div>
+</div>
+
+<!-- New Widgets -->
+<div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- Financial Summary -->
+    <div class="bg-white p-6 rounded-xl shadow-md">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">خلاصه مالی ماه جاری (<?php echo jdate('F'); ?>)</h3>
+        <div class="space-y-4">
+            <div class="flex justify-between items-center">
+                <span class="text-gray-600">درآمد (فروش)</span>
+                <span class="font-bold text-green-600"><?php echo number_format($financial_summary['revenue']); ?> تومان</span>
+            </div>
+            <div class="flex justify-between items-center">
+                <span class="text-gray-600">هزینه ها (تخمین)</span>
+                <span class="font-bold text-red-600"><?php echo number_format($financial_summary['expenses']); ?> تومان</span>
+            </div>
+            <div class="flex justify-between items-center border-t pt-3 mt-3">
+                <span class="text-gray-800 font-semibold">سود خالص</span>
+                <span class="font-bold text-blue-600 text-lg"><?php echo number_format($financial_summary['net_profit']); ?> تومان</span>
+            </div>
+        </div>
+    </div>
+    <!-- Urgent Orders -->
+    <div class="bg-white p-6 rounded-xl shadow-md">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">سفارشات نیازمند توجه فوری</h3>
+        <?php if (empty($urgent_orders)): ?>
+            <div class="flex flex-col items-center justify-center h-full text-center text-gray-500">
+                <svg class="w-12 h-12 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <p>هیچ سفارش فوری وجود ندارد.</p>
+            </div>
+        <?php else: ?>
+            <ul class="space-y-3">
+                <?php foreach ($urgent_orders as $order): ?>
+                <li class="flex justify-between items-center text-sm">
+                    <a href="#" class="text-blue-600 hover:underline">سفارش #<?php echo e($order->id); ?> (<?php echo e($order->customer_name); ?>)</a>
+                    <span class="text-red-500"><?php echo jdate('Y/m/d', strtotime($order->created_at)); ?></span>
+                </li>
+                <?php endforeach; ?>
+            </ul>
+        <?php endif; ?>
+    </div>
+</div>
+
+<!-- Main Chart & Recent Activity -->
+<div class="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-md">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">نمودار فروش ماهانه سال <?php echo jdate('Y'); ?></h3>
+        <div class="h-80">
+            <canvas id="salesChart"></canvas>
+        </div>
+    </div>
+    <div class="bg-white p-6 rounded-xl shadow-md">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">دسترسی سریع</h3>
+        <div class="space-y-4">
+            <a href="<?php echo APP_URL; ?>/orders/create" class="flex items-center p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition">
+                <svg class="w-6 h-6 text-blue-600 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span>ثبت سفارش جدید</span>
+            </a>
+            <a href="<?php echo APP_URL; ?>/financial/assign-credit" class="flex items-center p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition">
+                <svg class="w-6 h-6 text-green-600 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                <span>ثبت تراکنش مالی</span>
+            </a>
+            <a href="<?php echo APP_URL; ?>/users/create" class="flex items-center p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition">
+                <svg class="w-6 h-6 text-purple-600 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span>افزودن کاربر جدید</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js script with real data -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const salesData = <?php echo json_encode($monthly_sales_chart); ?>;
+        const hasData = salesData.some(v => v > 0);
+
+        if (hasData) {
+            const labels = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
+            const data = {
+                labels: labels,
+                datasets: [{
+                    label: 'میزان فروش (تومان)',
+                    backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                    borderColor: 'rgb(59, 130, 246)',
+                    data: salesData,
+                    tension: 0.4,
+                    fill: true,
+                }]
+            };
+            const config = { type: 'line', data: data, options: { responsive: true, maintainAspectRatio: false } };
+            new Chart(document.getElementById('salesChart'), config);
+        } else {
+            document.getElementById('salesChart').parentElement.innerHTML = '<div class="flex items-center justify-center h-full text-center text-gray-500"><p>داده‌ای برای نمایش نمودار در سال جاری وجود ندارد.</p></div>';
+        }
+    });
+</script>

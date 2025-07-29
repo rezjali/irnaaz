@@ -1,0 +1,47 @@
+<div class="bg-white p-6 rounded-xl shadow-md">
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-semibold">لیست تراکنش‌ها</h2>
+        <a href="<?php echo APP_URL; ?>/financial/assign-credit" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">اختصاص اعتبار</a>
+    </div>
+
+    <!-- Transactions Table -->
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm text-right text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                <tr>
+                    <th scope="col" class="py-3 px-6">شناسه</th>
+                    <th scope="col" class="py-3 px-6">مشتری</th>
+                    <th scope="col" class="py-3 px-6">مبلغ (تومان)</th>
+                    <th scope="col" class="py-3 px-6">نوع کیف پول</th>
+                    <th scope="col" class="py-3 px-6">نوع تراکنش</th>
+                    <th scope="col" class="py-3 px-6">تاریخ</th>
+                    <th scope="col" class="py-3 px-6">توضیحات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (empty($transactions)): ?>
+                    <tr><td colspan="7" class="text-center py-6">هیچ تراکنشی یافت نشد.</td></tr>
+                <?php else: ?>
+                    <?php foreach ($transactions as $transaction): ?>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="py-4 px-6 font-medium text-gray-900">#<?php echo e($transaction->id); ?></td>
+                            <td class="py-4 px-6"><?php echo e($transaction->customer_name); ?></td>
+                            <td class="py-4 px-6 font-bold <?php echo $transaction->amount > 0 ? 'text-green-600' : 'text-red-600'; ?>">
+                                <?php echo number_format($transaction->amount); ?>
+                            </td>
+                            <td class="py-4 px-6"><?php echo $transaction->wallet_type === 'product' ? 'کالا' : 'باربری'; ?></td>
+                            <td class="py-4 px-6"><?php $types = ['deposit' => 'واریز', 'withdrawal' => 'برداشت', 'order_payment' => 'پرداخت سفارش', 'refund' => 'بازگشت وجه']; echo $types[$transaction->transaction_type] ?? e($transaction->transaction_type); ?></td>
+                            <td class="py-4 px-6" dir="ltr"><?php echo jdate('Y/m/d H:i', strtotime($transaction->created_at)); ?></td>
+                            <td class="py-4 px-6"><?php echo e($transaction->description); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-6">
+        <?php require_once TEMPLATES_PATH . '/partials/_pagination.php'; ?>
+    </div>
+</div>

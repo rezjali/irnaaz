@@ -1,0 +1,42 @@
+<div class="bg-white p-6 rounded-xl shadow-md max-w-2xl mx-auto">
+    <h2 class="text-xl font-semibold mb-6 border-b pb-4">ویرایش پروفایل</h2>
+
+    <!-- Display Flash Message -->
+    <?php display_flash_message('success'); ?>
+
+    <form action="<?php echo APP_URL; ?>/profile/update" method="POST">
+        <div class="space-y-6">
+            <div>
+                <label for="username" class="block text-sm font-medium text-gray-700">نام کاربری</label>
+                <input type="text" id="username" value="<?php echo e($user->username ?? ''); ?>" disabled
+                       class="mt-1 w-full px-4 py-2 border bg-gray-100 rounded-lg">
+            </div>
+            <div>
+                <label for="full_name" class="block text-sm font-medium text-gray-700">نام کامل</label>
+                <input type="text" name="full_name" id="full_name" value="<?php echo e($user->full_name ?? ''); ?>" required
+                       class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg">
+            </div>
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">ایمیل</label>
+                <input type="email" name="email" id="email" value="<?php echo e($user->email ?? ''); ?>" required
+                       class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg">
+            </div>
+            <div>
+                <label for="phone" class="block text-sm font-medium text-gray-700">شماره تلفن</label>
+                <input type="text" name="phone" id="phone" value="<?php echo e($user->phone ?? ''); ?>"
+                       class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg">
+            </div>
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700">رمز عبور جدید</label>
+                <input type="password" name="password" id="password"
+                       class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg"
+                       placeholder="برای عدم تغییر، خالی بگذارید">
+            </div>
+        </div>
+        <div class="mt-8 pt-5 border-t">
+            <div class="flex justify-end">
+                <button type="submit" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700">ذخیره تغییرات</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,47 @@
+/*
+ * Custom Stylesheet
+ * This file complements Tailwind CSS for specific design elements.
+ */
+
+/* Apply Vazirmatn font to the entire body */
+body {
+    font-family: 'Vazirmatn', sans-serif;
+    background-color: #f8f9fa; /* A light grey background */
+}
+
+/* Sidebar Styling */
+.sidebar {
+    background-color: #212529; /* Dark background as per the image */
+}
+
+.sidebar a, .sidebar button {
+    color: #adb5bd; /* Light grey text for links */
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.sidebar a:hover, .sidebar button:hover {
+    background-color: #343a40; /* Slightly lighter dark on hover */
+    color: #ffffff; /* White text on hover */
+}
+
+/* Active menu item style */
+.sidebar a.active, .sidebar button.active {
+    background-color: #0d6efd; /* Blue background for active link */
+    color: #ffffff;
+}
+
+/* Submenu link styling */
+.sidebar .submenu a {
+    color: #ced4da; /* Lighter text for submenu items */
+    padding-right: 2.5rem; /* Indent submenu items */
+}
+
+.sidebar .submenu a:hover {
+    color: #ffffff;
+}
+
+/* Active submenu link style */
+.sidebar .submenu a.active {
+    color: #80b9ff; /* A light blue for active submenu item */
+    font-weight: 500;
+}

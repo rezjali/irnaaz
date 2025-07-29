@@ -1,0 +1,21 @@
+<div class="bg-white p-6 rounded-xl shadow-md">
+    <h2 class="text-xl font-semibold mb-6 border-b pb-4">ویرایش محتوای صفحه: <?php echo e($page->page_title); ?></h2>
+
+    <form action="<?php echo APP_URL; ?>/pages/update" method="POST">
+        <input type="hidden" name="page_id" value="<?php echo e($page->id); ?>">
+        
+        <!-- For a better experience, you can replace this textarea with a WYSIWYG editor like TinyMCE -->
+        <textarea name="page_content" id="page_content" rows="20"
+                  class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-sans">
+            <?php echo htmlspecialchars($page->page_content); ?>
+        </textarea>
+        
+        <!-- Form Actions -->
+        <div class="mt-6 pt-5 border-t">
+            <div class="flex justify-end">
+                <a href="<?php echo APP_URL; ?>/pages" class="bg-gray-200 text-gray-700 font-bold py-2 px-6 rounded-lg hover:bg-gray-300 ml-4">انصراف</a>
+                <button type="submit" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700">ذخیره تغییرات</button>
+            </div>
+        </div>
+    </form>
+</div>

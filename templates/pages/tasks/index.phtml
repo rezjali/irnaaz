@@ -1,0 +1,47 @@
+<div class="bg-white p-6 rounded-xl shadow-md">
+    <h2 class="text-xl font-semibold mb-4">تفکیک کار: تخصیص سفارشات به مسئول خرید</h2>
+    <p class="text-sm text-gray-500 mb-6">در این بخش سفارشاتی که در وضعیت "ثبت شد" قرار دارند و به هیچ کاربری تخصیص داده نشده‌اند، نمایش داده می‌شوند.</p>
+
+    <!-- Assignable Orders Table -->
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm text-right text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                <tr>
+                    <th scope="col" class="py-3 px-6">کد سفارش</th>
+                    <th scope="col" class="py-3 px-6">مشتری</th>
+                    <th scope="col" class="py-3 px-6">لینک محصول</th>
+                    <th scope="col" class="py-3 px-6">تخصیص به</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (empty($assignable_orders)): ?>
+                    <tr>
+                        <td colspan="4" class="text-center py-6">هیچ سفارش جدیدی برای تخصیص یافت نشد.</td>
+                    </tr>
+                <?php else: ?>
+                    <?php foreach ($assignable_orders as $order): ?>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="py-4 px-6 font-medium">#<?php echo e($order->id); ?></td>
+                            <td class="py-4 px-6"><?php echo e($order->customer_name); ?></td>
+                            <td class="py-4 px-6">
+                                <a href="<?php echo e($order->product_link); ?>" target="_blank" class="font-medium text-blue-600 hover:underline">مشاهده لینک</a>
+                            </td>
+                            <td class="py-4 px-6">
+                                <form action="<?php echo APP_URL; ?>/tasks/assign" method="POST" class="flex items-center space-x-2 space-x-reverse">
+                                    <input type="hidden" name="order_id" value="<?php echo e($order->id); ?>">
+                                    <select name="user_id" required class="w-48 px-2 py-1 border border-gray-300 rounded-lg text-xs">
+                                        <option value="">انتخاب مسئول خرید</option>
+                                        <?php foreach ($purchasers as $purchaser): ?>
+                                            <option value="<?php echo e($purchaser->id); ?>"><?php echo e($purchaser->full_name); ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    <button type="submit" class="px-3 py-1 text-xs font-medium text-white bg-green-600 rounded-md hover:bg-green-700">تخصیص</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="bg-white p-6 rounded-xl shadow-md">
+    <h2 class="text-xl font-semibold mb-4">لیست صفحات محتوایی</h2>
+
+    <!-- Pages Table -->
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm text-right text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                <tr>
+                    <th scope="col" class="py-3 px-6">عنوان صفحه</th>
+                    <th scope="col" class="py-3 px-6">اسلاگ (URL)</th>
+                    <th scope="col" class="py-3 px-6">آخرین ویرایش</th>
+                    <th scope="col" class="py-3 px-6">عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($pages as $page): ?>
+                    <tr class="bg-white border-b hover:bg-gray-50">
+                        <td class="py-4 px-6 font-medium text-gray-900"><?php echo e($page->page_title); ?></td>
+                        <td class="py-4 px-6" dir="ltr"><?php echo e($page->page_slug); ?></td>
+                        <td class="py-4 px-6"><?php echo jdate('Y/m/d H:i', strtotime($page->updated_at)); ?></td>
+                        <td class="py-4 px-6">
+                            <a href="<?php echo APP_URL; ?>/pages/edit?id=<?php echo e($page->id); ?>" class="font-medium text-blue-600 hover:underline">ویرایش</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="bg-white p-6 rounded-xl shadow-md max-w-2xl mx-auto">
+    <h2 class="text-xl font-semibold mb-6 border-b pb-4">تنظیمات ماژول تیکت‌ها</h2>
+
+    <form action="<?php echo APP_URL; ?>/settings/update" method="POST">
+        <div class="space-y-6">
+            <!-- Allow New Tickets -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700">امکان ایجاد تیکت جدید توسط کاربران</label>
+                <div class="mt-2 flex items-center space-x-4 space-x-reverse">
+                    <label class="flex items-center">
+                        <input type="radio" name="ticket_allow_new" value="1" class="h-4 w-4" <?php echo ($settings['ticket_allow_new'] ?? '1') == '1' ? 'checked' : ''; ?>>
+                        <span class="mr-2">فعال</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="ticket_allow_new" value="0" class="h-4 w-4" <?php echo ($settings['ticket_allow_new'] ?? '1') == '0' ? 'checked' : ''; ?>>
+                        <span class="mr-2">غیرفعال</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Auto-close Tickets -->
+            <div>
+                <label for="ticket_auto_close_days" class="block text-sm font-medium text-gray-700 mb-1">بستن خودکار تیکت‌های بی‌پاسخ</label>
+                <div class="flex items-center">
+                    <input type="number" name="ticket_auto_close_days" id="ticket_auto_close_days"
+                           class="w-24 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                           value="<?php echo e($settings['ticket_auto_close_days'] ?? '7'); ?>">
+                    <span class="mr-2 text-sm text-gray-600">روز پس از آخرین پاسخ</span>
+                </div>
+                <p class="text-xs text-gray-500 mt-1">
+                    (مقدار ۰ به معنی غیرفعال کردن این قابلیت است)
+                </p>
+            </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="mt-8 pt-5 border-t">
+            <div class="flex justify-end">
+                <button type="submit" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700">ذخیره تغییرات</button>
+            </div>
+        </div>
+    </form>
+</div>
